@@ -1,7 +1,7 @@
 import { Book, LibMgrCallback } from './interfaces';
 import { BookProperties, BookOrUndefined } from './types';
 import { Category } from './enums';
-import { RefBook } from './classes';
+import RefBook from './classes/encyclopedia';
 
 export function getProperty<TObject, TKey extends keyof TObject>(obj: TObject, prop: TKey): TObject[TKey] | string {
     if (typeof obj[prop] === 'function') {
