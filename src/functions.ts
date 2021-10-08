@@ -1,7 +1,7 @@
 import { Book } from './interfaces';
 import { BookProperties, BookOrUndefined } from './types';
 import { Category } from './enums';
-import RefBook from './encyclopedia';
+import RefBook from './classes/encyclopedia';
 
 export function getProperty(book: Book, prop: BookProperties): any {
     if (typeof book[prop] === 'function') {
