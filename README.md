@@ -11,6 +11,7 @@ It uses webpack and webpack-dev-server.
 ## Contributors
 | What                                                                       | Who                                               |
 | -------------------------------------------------------------------------- |---------------------------------------------------|
+| Check and fix mistakes in doc file                                         | Dmytro Shulzhenko <Dmytro_Shulzhenko@epam.com>    |
 | Update dependencies: TypeScript from v4.0.5 to v4.4.3                      | Vadym Nastoiashchyi <Vadym_Nastoiashchyi@epam.com>|
 | Add new requirements for the Task 06.03                                    | Yevhen_Zakharevych <Yevhen_Zakharevych@epam.com> | 
 | Replace TSLint with ESLint                                                 | Anna Bankovskaia <Anna_Bankovskaia@epam.com>      |
