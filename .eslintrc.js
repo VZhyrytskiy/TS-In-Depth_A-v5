@@ -52,9 +52,6 @@ module.exports = {
         'no-underscore-dangle': 'error',
         'no-unsafe-finally': 'error',
         'no-var': 'error',
-        'no-underscore-dangle': {
-            'allowAfterThis': true
-        },
         'spaced-comment': ['error', 'always', { markers: ['/'] }],
     }
 };
