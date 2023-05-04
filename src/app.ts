@@ -1,7 +1,8 @@
 /* eslint-disable no-redeclare */
+
 function showHello(divName: string, name: string) {
     const elt = document.getElementById(divName);
-    elt.innerText = `Hello from ${name}`;
+    elt!.innerText = `Hello from ${name}`;
 }
 
 showHello('greeting', 'TypeScript');
@@ -15,7 +16,7 @@ enum Category {
 }
 
 function getAllBooks() {
-    let books = <const>[
+    const books = <const>[
         {
             id: 1,
             title: 'Refactoring JavaScript',
@@ -50,26 +51,19 @@ function getAllBooks() {
 }
 
 function logFirstAvailable(books: readonly any[] = getAllBooks()): void {
-    let numberOfBooks: number = books.length;
-    let firstAvailableBookTitle: string = '';
+    const numberOfBooks: number = books.length;
+    const title = books.find(({ available }) => available)?.title;
 
-    for (let currentBook of books) {
-        if (currentBook.available) {
-            firstAvailableBookTitle = currentBook.title;
-            break;
-        }
-
-        console.log(`Total Books: ${numberOfBooks}`);
-        console.log(`First Available Book: ${firstAvailableBookTitle}`);
-    }
+    console.log(`Total Books: ${numberOfBooks}`);
+    console.log(`First Available Book: ${title}`);
 }
 
-function getBookTitlesByCategory(category: Category = Category.JavaScript): Array<string> {
-    console.log(`Getting books in category: ${Category[category]}`);
+function getBookTitlesByCategory(categoryFilter: Category = Category.JavaScript): Array<string> {
+    console.log(`Getting books in category: ${Category[categoryFilter]}`);
 
-    return getAllBooks()
-        .filter(book => book['category'] === category)
-        .map(book => book['title']);
+    const books = getAllBooks();
+
+    return books.filter(({ category }) => category === categoryFilter).map(({ title }) => title);
 }
 
 function logBookTitles(titles: string[]): void {
@@ -78,11 +72,10 @@ function logBookTitles(titles: string[]): void {
     }
 }
 
-function getBookAuthorByIndex(index: number): [string, string] {
+function getBookAuthorByIndex(index: number): [title: string, author: string] {
     const books = getAllBooks();
-    const { title, author } = books[index];
-    const result: [title: string, author: string] = [title, author];
-    return result;
+    const { title, author } = books[index] ?? {};
+    return [title, author];
 }
 
 function calcTotalPages(): bigint {
@@ -106,13 +99,8 @@ function createCustomerID(name: string, id: number): string {
 function createCustomer(name: string, age?: number, city?: string): void {
     console.log(`Creating customer ${name}`);
 
-    if (age) {
-        console.log(`Age: ${age}`);
-    }
-
-    if (city) {
-        console.log(`City: ${city}`);
-    }
+    age && console.log(`Age: ${age}`);
+    city && console.log(`City: ${city}`);
 }
 
 function getBookByID(id: number): any {
@@ -138,24 +126,24 @@ function getTitles(available: boolean): string[];
 function getTitles(id: number, available: boolean): string[];
 function getTitles(...args: any[]): string[] {
     const books = getAllBooks();
-    if (args.length === 0) {
-        return [];
-    } else if (args.length === 1) {
-        const arg = args[0];
+
+    if (args.length === 1) {
+        const [arg] = args;
 
         if (typeof arg === 'string') {
-            return books.filter(book => book.author === arg).map(book => book.title);
+            return books.filter(({ author }) => author === arg).map(({ title }) => title);
         } else if (typeof arg === 'boolean') {
-            return books.filter(book => book.available === arg).map(book => book.title);
+            return books.filter(({ available }) => available === arg).map(({ title }) => title);
         }
     } else if (args.length === 2) {
-        const id = args[0];
-        const available = args[1];
+        const [id, available] = args;
 
         if (typeof id === 'number' && available === 'boolean') {
             return books.filter(book => book.id === id && book.available === available).map(book => book.title);
         }
     }
+
+    return [];
 }
 
 // ---------------------------------------------
@@ -173,18 +161,18 @@ function getTitles(...args: any[]): string[] {
 
 // console.log(calcTotalPages());
 
-// Task 03.02
+// Task 03.01
 // let myID = createCustomerID('Ann', 10);
 // console.log(myID);
 
-// // the names of parameters are not important
-// let IdGenerator: (chars: string, num: number) => string;
-// IdGenerator = (name: string, id: number) => `${name}${id}`;
-// IdGenerator = createCustomerID;
-// myID = IdGenerator('Ann', 20);
+// the names of parameters are not important
+// let idGenerator: (chars: string, num: number) => string;
+// idGenerator = (name: string, id: number) => `${name}${id}`;
+// idGenerator = createCustomerID;
+// myID = idGenerator('Ann', 20);
 // console.log(myID);
 
-// Task 03.03
+// Task 03.02
 // createCustomer('Ann');
 // createCustomer('Boris', 6);
 // createCustomer('Clara', 12, 'Atlanta');
@@ -195,9 +183,11 @@ function getTitles(...args: any[]): string[] {
 // logFirstAvailable();
 // console.log(getBookByID(1));
 
-// let myBooks: string[] = сheckoutBooks('Ann', 1, 3, 4);
+// console.log(getBookByID(1));
+
+// const myBooks: string[] = сheckoutBooks('Ann', 1, 3, 4);
 // console.log(myBooks);
 
-// Task 03.04
-let checkedOutBooks = getTitles(false);
-console.log(checkedOutBooks);
+// Task 03.03
+const titles = getTitles(false);
+console.log(titles);
