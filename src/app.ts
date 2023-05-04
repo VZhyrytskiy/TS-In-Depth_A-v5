@@ -116,8 +116,8 @@ let myID = createCustomerID('Ann', 10);
 console.log(myID);
 
 // the names of parameters are not important
-let IdGenerator: (chars: string, num: number) => string;
-IdGenerator = (name: string, id: number) => `${name}${id}`;
-IdGenerator = createCustomerID;
-myID = IdGenerator('Ann', 20);
+let idGenerator: (chars: string, num: number) => string;
+idGenerator = (name: string, id: number) => `${name}${id}`;
+idGenerator = createCustomerID;
+myID = idGenerator('Ann', 20);
 console.log(myID);
