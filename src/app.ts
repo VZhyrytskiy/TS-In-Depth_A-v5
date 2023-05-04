@@ -1,6 +1,6 @@
 function showHello(divName: string, name: string) {
     const elt = document.getElementById(divName);
-    elt.innerText = `Hello from ${name}`;
+    elt!.innerText = `Hello from ${name}`;
 }
 
 showHello('greeting', 'TypeScript');
@@ -14,7 +14,7 @@ enum Category {
 }
 
 function getAllBooks() {
-    let books = <const>[
+    const books = <const>[
         {
             id: 1,
             title: 'Refactoring JavaScript',
@@ -49,33 +49,21 @@ function getAllBooks() {
 }
 
 function logFirstAvailable(books: readonly any[]): void {
-    let numberOfBooks: number = books.length;
-    let firstAvailableBookTitle: string = '';
+    const numberOfBooks: number = books.length;
+    const title = books.find(({ available }) => available)?.title;
 
-    for (let currentBook of books) {
-        if (currentBook.available) {
-            firstAvailableBookTitle = currentBook.title;
-            break;
-        }
-
-        console.log(`Total Books: ${numberOfBooks}`);
-        console.log(`First Available Book: ${firstAvailableBookTitle}`);
-    }
+    console.log(`Total Books: ${numberOfBooks}`);
+    console.log(`First Available Book: ${title}`);
 }
 
 function getBookTitlesByCategory(categoryFilter: Category): Array<string> {
     console.log(`Getting books in category: ${Category[categoryFilter]}`);
 
-    const allBooks = getAllBooks();
-    const filteredTitles: string[] = [];
+    const books = getAllBooks();
 
-    for (let currentBook of allBooks) {
-        if (currentBook.category === categoryFilter) {
-            filteredTitles.push(currentBook.title);
-        }
-    }
-
-    return filteredTitles;
+    return books
+        .filter(({ category }) => category === categoryFilter)
+        .map(({ title }) => title);
 }
 
 function logBookTitles(titles: string[]): void {
@@ -84,11 +72,10 @@ function logBookTitles(titles: string[]): void {
     }
 }
 
-function getBookAuthorByIndex(index: number): [string, string] {
+function getBookAuthorByIndex(index: number): [title: string, author: string] {
     const books = getAllBooks();
-    const { title, author } = books[index];
-    const result: [title: string, author: string] = [title, author];
-    return result;
+    const { title, author } = books[index] ?? {};
+    return [ title, author ];
 }
 
 function calcTotalPages(): bigint {
