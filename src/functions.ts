@@ -1,16 +1,10 @@
-import { Book } from './interfaces';
+/* eslint-disable no-redeclare */
+import { Book, TOptions } from './interfaces';
 import { BookProperties, BookOrUndefined } from './types';
 import { Category } from './enums';
 
-export function getProperty(book: Book, prop: BookProperties): any {
-    if (typeof book[prop] === 'function') {
-        return (book[prop] as Function).name;
-    }
-    return book[prop];
-}
-
 export function getAllBooks(): readonly Book[] {
-    let books: readonly Book[] = <const>[
+    const books: readonly Book[] = <const>[
         {
             id: 1,
             title: 'Refactoring JavaScript',
@@ -45,33 +39,19 @@ export function getAllBooks(): readonly Book[] {
 }
 
 export function logFirstAvailable(books: readonly any[] = getAllBooks()): void {
-    let numberOfBooks: number = books.length;
-    let firstAvailableBookTitle: string = '';
-
-    for (let currentBook of books) {
-        if (currentBook.available) {
-            firstAvailableBookTitle = currentBook.title;
-            break;
-        }
-    }
+    const numberOfBooks: number = books.length;
+    const title = books.find(({ available }) => available)?.title;
 
     console.log(`Total Books: ${numberOfBooks}`);
-    console.log(`First Available Book: ${firstAvailableBookTitle}`);
+    console.log(`First Available Book: ${title}`);
 }
 
 export function getBookTitlesByCategory(categoryFilter: Category = Category.JavaScript): Array<string> {
     console.log(`Getting books in category: ${Category[categoryFilter]}`);
 
-    const allBooks = getAllBooks();
-    const filteredTitles: string[] = [];
+    const books = getAllBooks();
 
-    for (let currentBook of allBooks) {
-        if (currentBook.category === categoryFilter) {
-            filteredTitles.push(currentBook.title);
-        }
-    }
-
-    return filteredTitles;
+    return books.filter(({ category }) => category === categoryFilter).map(({ title }) => title);
 }
 
 export function logBookTitles(titles: string[]): void {
@@ -80,31 +60,25 @@ export function logBookTitles(titles: string[]): void {
     }
 }
 
-export function getBookByID(id: number): BookOrUndefined {
-    const allBooks = getAllBooks();
-    return allBooks.find(book => book.id === id);
+export function getBookAuthorByIndex(index: number): [title: string, author: string] {
+    const books = getAllBooks();
+    const { title, author } = books[index] ?? {};
+    return [title, author];
 }
 
-export function getBookAuthorByIndex(index: number): [string, string] {
-    const books = getAllBooks();
-    const { title, author } = books[index];
-    const result: [title: string, author: string] = [title, author];
+export function calcTotalPages(): bigint {
+    const data = <const>[
+        { lib: 'libName1', books: 1_000_000_000, avgPagesPerBook: 250 },
+        { lib: 'libName2', books: 5_000_000_000, avgPagesPerBook: 300 },
+        { lib: 'libName3', books: 3_000_000_000, avgPagesPerBook: 280 },
+    ];
+
+    let result = data.reduce((acc: bigint, obj) => {
+        return acc + BigInt(obj.books) * BigInt(obj.avgPagesPerBook);
+    }, 0n);
+
     return result;
 }
-
-// export function calcTotalPages(): BigInt {
-//   const data = <const>[
-//     { lib: 'libName1', books: 1_000_000_000, avgPagesPerBook: 250 },
-//     { lib: 'libName2', books: 5_000_000_000, avgPagesPerBook: 300 },
-//     { lib: 'libName3', books: 3_000_000_000, avgPagesPerBook: 280 }
-//   ];
-
-//   let result = data.reduce((acc: bigint, obj) => {
-//     return acc + BigInt(obj.books) * BigInt(obj.avgPagesPerBook);
-//   }, 0n);
-
-//   return result;
-// }
 
 export function createCustomerID(name: string, id: number): string {
     return `${name}${id}`;
@@ -113,28 +87,26 @@ export function createCustomerID(name: string, id: number): string {
 export function createCustomer(name: string, age?: number, city?: string): void {
     console.log(`Creating customer ${name}`);
 
-    if (age) {
-        console.log(`Age: ${age}`);
-    }
+    age && console.log(`Age: ${age}`);
+    city && console.log(`City: ${city}`);
+}
 
-    if (city) {
-        console.log(`City: ${city}`);
-    }
+export function getBookByID(id: Book['id']): BookOrUndefined {
+    const books = getAllBooks();
+    return books.find(book => book.id === id);
 }
 
 export function сheckoutBooks(customer: string, ...bookIDs: number[]): string[] {
     console.log(`Checking out books for ${customer}`);
 
-    let booksCheckedOut: string[] = [];
+    let titles: string[] = [];
 
-    for (let id of bookIDs) {
-        let book = getBookByID(id);
-        if (book && book.available) {
-            booksCheckedOut.push(book.title);
-        }
-    }
+    bookIDs.forEach(id => {
+        const book = getBookByID(id);
+        if (book?.available) titles.push(book.title);
+    });
 
-    return booksCheckedOut;
+    return titles;
 }
 
 export function getTitles(author: string): string[];
@@ -142,32 +114,32 @@ export function getTitles(available: boolean): string[];
 export function getTitles(id: number, available: boolean): string[];
 export function getTitles(...args: any[]): string[] {
     const books = getAllBooks();
-    if (args.length === 0) {
-        return [];
-    } else if (args.length === 1) {
-        const arg = args[0];
+
+    if (args.length === 1) {
+        const [arg] = args;
 
         if (typeof arg === 'string') {
-            return books.filter(book => book.author === arg).map(book => book.title);
+            return books.filter(({ author }) => author === arg).map(({ title }) => title);
         } else if (typeof arg === 'boolean') {
-            return books.filter(book => book.available === arg).map(book => book.title);
+            return books.filter(({ available }) => available === arg).map(({ title }) => title);
         }
     } else if (args.length === 2) {
-        const id = args[0];
-        const available = args[1];
+        const [id, available] = args;
 
         if (typeof id === 'number' && available === 'boolean') {
             return books.filter(book => book.id === id && book.available === available).map(book => book.title);
         }
     }
+
+    return [];
 }
 
 export function printBook(book: Book): void {
     console.log(`${book.title} by ${book.author}`);
 }
 
-export function assertStringValue(val: any): asserts val is string {
-    if (typeof val !== 'string') {
+export function assertStringValue(value: any): asserts value is string {
+    if (typeof value !== 'string') {
         throw new Error('value should have been a string.');
     }
 }
@@ -176,4 +148,15 @@ export function bookTitleTransform(title: any) {
     assertStringValue(title);
 
     return [...title].reverse().join('');
+}
+
+export function getProperty(book: Book, prop: BookProperties): any {
+    const value = book[prop];
+    return typeof value === 'function' ? value.name : value;
+}
+
+export function setDefaultConfig(options: TOptions): TOptions {
+    options.duration ??= 100;
+    options.speed ??= 25;
+    return options;
 }
