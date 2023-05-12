@@ -45,12 +45,7 @@ interface Librarian extends Person {
 
 type BookProperties = keyof Book;
 
-function getProperty(book: Book, prop: BookProperties): any {
-    if (typeof book[prop] === 'function') {
-        return (book[prop] as Function).name;
-    }
-    return book[prop];
-}
+
 
 function getAllBooks(): readonly Book[] {
     const books: readonly Book[] = <const>[
@@ -199,6 +194,11 @@ function bookTitleTransform(title: any) {
     return [...title].reverse().join('');
 }
 
+function getProperty(book: Book, prop: BookProperties): any {
+    const value = book[prop];
+    return typeof value === 'function' ? value.name : value;
+}
+
 // ---------------------------------------------
 // Task 02.01
 // console.log(getAllBooks());
@@ -300,7 +300,7 @@ function bookTitleTransform(title: any) {
 // console.log(offer.book.authors?.[0]);
 
 // Task 04.05
-console.log(getProperty(getAllBooks()[0], 'title')); // Refactoring JavaScript
-console.log(getProperty(getAllBooks()[0], 'markDamaged')); // undefined
+// console.log(getProperty(getAllBooks()[0], 'title')); // Refactoring JavaScript
+// console.log(getProperty(getAllBooks()[0], 'markDamaged')); // undefined
 // console.log(getProperty(getAllBooks()[0], 'isbn'));      // error
 
