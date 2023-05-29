@@ -25,7 +25,12 @@ interface Author extends Person {
 
 interface Librarian extends Person {
     department: string;
-    assistCustomer: (custName: string) => void;
+    assistCustomer: (custName: string, bookTitle: string) => void;
 }
 
-export { Book, DamageLogger as Logger, Person, Author, Librarian };
+interface TOptions {
+    duration?: number;
+    speed?: number;
+}
+
+export { Book, DamageLogger as Logger, Person, Author, Librarian, TOptions };
