@@ -3,7 +3,7 @@ enum Category {
     CSS,
     HTML,
     TypeScript,
-    Angular2,
+    Angular,
     Software,
 }
 
