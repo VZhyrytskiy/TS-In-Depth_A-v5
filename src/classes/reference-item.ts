@@ -1,8 +1,9 @@
+/* eslint-disable no-underscore-dangle */
 export abstract class ReferenceItem {
     // title: string;
     // year: number;
     #id: number;
-    private _publisher: string;
+    private _publisher: string = '';
     static department: string = 'Research';
 
     // constructor(newTitle: string, newYear: number) {
@@ -19,6 +20,7 @@ export abstract class ReferenceItem {
     printItem(): void {
         console.log(`${this.title} was published in ${this.year}.`);
         console.log(`Department: ${ReferenceItem.department}`);
+        console.log(`Department: ${Object.getPrototypeOf(this).constructor.department}`);
     }
 
     get publisher(): string {
