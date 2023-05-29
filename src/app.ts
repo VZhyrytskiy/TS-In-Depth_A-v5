@@ -323,8 +323,8 @@ import Encyclopedia from './classes/encyclopedia';
 // librarian.assistCustomer('Boris', 'Learn TypeScript');
 
 // Task 08.06
-const l = new UL.UniversityLibrarian();
-l.name = 'Ann';
-console.log(l);
-console.log(l.name);
-l.assistCustomer('Boris', 'Learn TypeScript');
+// const l = new UL.UniversityLibrarian();
+// l.name = 'Ann';
+// console.log(l);
+// console.log(l.name);
+// l.assistCustomer('Boris', 'Learn TypeScript');
