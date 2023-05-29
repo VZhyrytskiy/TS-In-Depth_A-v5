@@ -25,12 +25,17 @@ interface Author extends Person {
 
 interface Librarian extends Person {
     department: string;
-    assistCustomer: (custName: string) => void;
+    assistCustomer: (custName: string, bookTitle: string) => void;
+}
+
+interface TOptions {
+    duration?: number;
+    speed?: number;
 }
 
 interface Magazine {
-  title: string;
-  publisher: string;
+    title: string;
+    publisher: string;
 }
 
-export { Book, DamageLogger as Logger, Person, Author, Librarian, Magazine };
+export { Book, DamageLogger as Logger, Person, Author, Librarian, TOptions, Magazine };

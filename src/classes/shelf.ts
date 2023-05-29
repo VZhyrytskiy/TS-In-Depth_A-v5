@@ -1,11 +1,11 @@
 export default class Shelf<T> {
-  private _items: Array<T> = new Array<T>();
+    private items: Array<T> = new Array<T>();
 
-  add(item: T): void {
-    this._items.push(item);
-  }
+    add(item: T): void {
+        this.items.push(item);
+    }
 
-  getFirst(): T {
-    return this._items[0];
-  }
+    getFirst(): T {
+        return this.items[0];
+    }
 }
