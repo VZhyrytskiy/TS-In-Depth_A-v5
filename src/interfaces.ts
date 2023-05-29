@@ -25,21 +25,30 @@ interface Author extends Person {
 
 interface Librarian extends Person {
     department: string;
-    assistCustomer: (custName: string) => void;
+    assistCustomer: (custName: string, bookTitle: string) => void;
+}
+
+interface TOptions {
+    duration?: number;
+    speed?: number;
 }
 
 interface Magazine {
-  title: string;
-  publisher: string;
+    title: string;
+    publisher: string;
 }
 
 interface ShelfItem {
-  title: string;
+    title: string;
 }
 
 interface LibMgrCallback {
-  (err: Error, titles: string[]): void;
+    (err: Error | null, titles: string[] | null): void;
+}
+
+interface Callback<T> {
+    (err: Error | null, data: T | null): void;
 }
 
 
-export { Book, DamageLogger as Logger, Person, Author, Librarian, Magazine, ShelfItem, LibMgrCallback };
+export { Book, DamageLogger as Logger, Person, Author, Librarian, TOptions, Magazine, ShelfItem, LibMgrCallback, Callback };
