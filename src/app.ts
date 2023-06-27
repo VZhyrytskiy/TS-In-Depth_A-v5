@@ -37,6 +37,7 @@ import {
 } from './functions';
 import { BookRequiredFields, createCustomerFunctionType, UpdatedBook } from './types';
 import Encyclopedia from './classes/encyclopedia';
+import { Library } from './classes/library';
 
 // ---------------------------------------------
 // Task 02.01
@@ -296,6 +297,8 @@ import Encyclopedia from './classes/encyclopedia';
 
 // Task 08.01
 // const favoriteLibrarian = new UL.UniversityLibrarian();
+// (UL.UniversityLibrarian as any).a = 1;
+// (UL.UniversityLibrarian.prototype as any).b = 1;
 
 // Task 08.02
 // const fLibrarian = new UL.UniversityLibrarian();
@@ -322,9 +325,8 @@ import Encyclopedia from './classes/encyclopedia';
 // enc.printItem();
 
 // Task 08.05
-// const librarian = new UL.UniversityLibrarian();
-// librarian.name = 'Ann';
-// librarian.assistCustomer('Boris', 'Learn TypeScript');
+// const lib = new Library();
+// console.log(lib);
 
 // Task 08.06
 // const l = new UL.UniversityLibrarian();
@@ -335,7 +337,7 @@ import Encyclopedia from './classes/encyclopedia';
 
 // Task 08.07
 // const e = new Encyclopedia(1, 'title', 2018, 3);
-// e.copies = 13;
+// e.copies = 1.3;
 // console.log(e.copies);
 
 // Task 09.01
@@ -362,6 +364,6 @@ import Encyclopedia from './classes/encyclopedia';
 // console.log('Search submitted...');
 
 // Task 09.03
-console.log('Beginning search...');
-logSearchResults(Category.JavaScript).catch(reason => console.log(reason));
-console.log('Search submitted...');
+// console.log('Beginning search...');
+// logSearchResults(Category.JavaScript).catch(reason => console.log(reason));
+// console.log('Search submitted...');

@@ -1,16 +1,17 @@
 /* eslint-disable no-underscore-dangle */
 
 import { ReferenceItem } from './reference-item';
-import { positiveInteger } from './../decorators';
+// import { positiveInteger } from './../decorators';
+import { positiveInteger } from './../new-decorators';
 
 export default class Encyclopedia extends ReferenceItem {
     private _copies!: number;
 
-    @positiveInteger
     get copies(): number {
         return this._copies;
     }
 
+    @positiveInteger
     set copies(value: number) {
         this._copies = value;
     }

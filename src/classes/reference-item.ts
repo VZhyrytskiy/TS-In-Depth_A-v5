@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 
-import { timeout } from './../decorators';
+import { timeout } from './../new-decorators';
 export abstract class ReferenceItem {
     // title: string;
     // year: number;

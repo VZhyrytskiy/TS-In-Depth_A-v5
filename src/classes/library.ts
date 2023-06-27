@@ -1,5 +1,7 @@
+import { setInitial } from '../new-decorators';
+
 export class Library {
-    id!: number;
+    @setInitial(10) id!: number;
     name!: string;
     address!: string;
 }
