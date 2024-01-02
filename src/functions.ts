@@ -1,5 +1,5 @@
 /* eslint-disable no-redeclare */
-import { Book, TOptions, LibMgrCallback } from './interfaces';
+import { Book, TOptions, LibMgrCallbackFn } from './interfaces';
 import { BookProperties, BookOrUndefined } from './types';
 import { Category } from './enums';
 import RefBook from './classes/encyclopedia';
@@ -183,7 +183,7 @@ export function getObjectProperty<TObject, TKey extends keyof TObject>(
     return typeof value === 'function' ? value.name : value;
 }
 
-export function getBooksByCategory(category: Category, callback: LibMgrCallback): void {
+export function getBooksByCategory(category: Category, callback: LibMgrCallbackFn): void {
     setTimeout(() => {
         try {
             const foundBooks: string[] = getBookTitlesByCategory(category);
