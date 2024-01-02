@@ -1,6 +1,8 @@
+import { UniversityLibrarian } from './classes/university-librarian';
+
 // 8.1 class decorator
 export function freeze(data: string) {
-    return function (originalClass: Function, { kind }: ClassDecoratorContext) {
+    return function (originalClass: Function, { kind }: ClassDecoratorContext): void {
         if (kind === 'class') {
             console.log(`Freezing the constructor ${data}`);
             Object.freeze(originalClass);
@@ -10,7 +12,7 @@ export function freeze(data: string) {
 }
 
 // 8.2 class decorator
-export function logger(originalClass: Function, { kind }: ClassDecoratorContext) {
+export function logger<Return extends new (...args: any[]) => any>(originalClass: Return, { kind }: ClassDecoratorContext): Return | void {
     if (kind === 'class') {
         const newConstructor = function (this: any) {
             console.log('Creating new instance.');
@@ -26,7 +28,9 @@ export function logger(originalClass: Function, { kind }: ClassDecoratorContext)
             console.log(`Librarian name:  ${this.name}, Librarian age: ${this.age}`);
         };
 
-        return newConstructor;
+        // This type assertion bypasses TypeScript's allows us to assume that
+        // the returned value will match type Return, even if there is no direct type relationship.
+        return newConstructor as unknown as Return;
     }
 }
 
