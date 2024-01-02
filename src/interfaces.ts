@@ -42,13 +42,13 @@ interface ShelfItem {
     title: string;
 }
 
-interface LibMgrCallback {
+interface LibMgrCallbackFn {
     (err: Error | null, titles: string[] | null): void;
 }
 
-interface Callback<T> {
+interface CallbackFn<T> {
     (err: Error | null, data: T | null): void;
 }
 
 
-export { Book, DamageLogger as Logger, Person, Author, Librarian, TOptions, Magazine, ShelfItem, LibMgrCallback, Callback };
+export { Book, DamageLogger as Logger, Person, Author, Librarian, TOptions, Magazine, ShelfItem, LibMgrCallbackFn, CallbackFn };
