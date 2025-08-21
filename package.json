@@ -1,6 +1,6 @@
 {
   "name": "typescript-in-depth-webpack",
-  "version": "5.4.2",
+  "version": "5.9.2",
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
